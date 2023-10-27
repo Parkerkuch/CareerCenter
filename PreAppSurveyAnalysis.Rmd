@@ -1,0 +1,173 @@
+---
+title: "Pre-Appointment Survey Analysis"
+author: "Parker Kuchulan"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Packages
+```{r Import}
+library(tidyverse)
+library(skimr)
+library(tools)
+library(data.table)
+library(wordcloud2)
+library(RColorBrewer)
+```
+
+## Data Import
+```{r Reading Data}
+#Reading datafile
+surveyResults <- read_csv("~/Career Center Internship/DataFiles/pre-app-survey-results.csv")
+```
+## Data Exploration
+```{r Skim/Glimpse}
+#checking variable skim metrics
+skim(surveyResults)
+
+glimpse(surveyResults)
+```
+## Data Cleaning
+```{r remove NAs}
+#removing NA names
+surveyResults2 <- surveyResults %>% filter(!is.na(name))
+```
+
+```{r Cleaning}
+#Changing names and responses to lowercase
+lowercase <- surveyResults2 %>% mutate(lowerName = tolower(name), lowerHearResponse = tolower(hear_response), lowerReferralResponse = tolower(referral_response)) %>% select(lowerName, date, phone_number, email_address, lowerHearResponse, lowerReferralResponse)
+
+#converting date to date/time type
+dateTime <- lowercase %>% mutate(date = (as.POSIXct(date, format = '%Y-%m-%d %H:%M:%S', tz = 'UTC')))
+```
+
+### Extracting non-duplicate student responses
+```{r Cleaning/Joining}
+#counting #of responses per student
+countResponse <- dateTime %>%
+  group_by(lowerName) %>%
+  mutate(response_count = n()) %>%
+  ungroup()
+
+#Creating df with earliest responses for each student
+earliestResponses <- countResponse %>% group_by(lowerName) %>% summarize(earliest_date = min(date))
+
+#joining earliestResponses df with countResponse df, and then filtering to make sure only the earliest response for each unique student is recorded
+result <- countResponse %>%
+  left_join(earliestResponses, by = "lowerName") %>%
+  filter(date == earliest_date)
+```
+
+### Removing Demo Accounts
+```{r demo removal}
+#Removing demo accounts, selecting important cols
+result2 <- result %>% filter(!grepl("demo account", lowerName, ignore.case = TRUE), !grepl("prospective student", lowerName, ignore.case = TRUE)) %>% select(lowerName, date, lowerHearResponse, lowerReferralResponse, response_count)
+```
+
+## Data Tidying
+```{r gathering tallys}
+#creating a df that contains the amount of responses for each "how did you hear about us" option
+
+#response options df
+responseOptions <- data.frame(options = c("faculty/professor referral", "academic advisor referral", "career advisor", "referral", "classmate/friend/student organization referral", "presentation or event", "email", "web search", "follow-up appointment", "other"))
+
+#splitting every hear response into multiple rows to account for students who checked multiple boxes (This is just for analyzing hear response, not referral because it creates duplicate rows for each student who checked multiple boxes for hear response)
+result2Long <- result2 %>%
+  separate_rows(lowerHearResponse, sep = ", ")
+
+
+#Most notable responses for other: US 301, Handshake, GVSU Website, and Alumni
+#Creating var for if hear response contains "other" or not, trimming whitespace from hear responses
+result2LongOther <- result2Long %>% mutate(other = grepl("other", lowerHearResponse, ignore.case = TRUE), lowerHearResponse = trimws(lowerHearResponse))
+
+#Tallying other responses
+#Most notable responses for other: US 301, Handshake, GVSU Website, and Alumni (highest in-common response was 16)
+otherTallys <- result2LongOther %>% group_by(other) %>% summarize(count = n())
+
+#Tallying hear responses, getting rid of others and responses with only 1 count
+hearTallys <- result2LongOther %>% 
+  group_by(lowerHearResponse) %>% summarize(count = n()) %>% 
+  filter(!grepl("other", lowerHearResponse, ignore.case = TRUE), count > 1)
+
+#Adding others row to hearTally
+otherTallys2 <- otherTallys %>% mutate(lowerHearResponse = as.character(other)) %>% select(lowerHearResponse, count)
+
+#Joining dfs
+tallyTest <- hearTallys %>% full_join(otherTallys2)
+
+fullTallys <- tallyTest %>% filter(!lowerHearResponse == 'FALSE') %>% mutate(lowerHearResponse = ifelse(lowerHearResponse == 'TRUE', 'other', lowerHearResponse))
+```
+
+```{r creating df with proportions}
+#Now that we have a full df with all the tallys for hear response, we can create a proportion variable
+totalResponses <- fullTallys %>% mutate(total = sum(count), prop = round(count/total, 2), lowerHearResponse = toTitleCase(lowerHearResponse)) %>% select(lowerHearResponse, count, prop)
+```
+
+
+## Visualizations
+
+### Bar Chart
+```{r Bar Chart for counts of responses}
+totalResponses %>% ggplot(aes(x = reorder(lowerHearResponse, -count), y = count)) +
+  geom_col(fill = "dodgerblue3", color = 'black') +
+  geom_text(aes(label = count), vjust = -0.5, size = 3, color = "gray") + 
+  theme_classic() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  theme(axis.text.x = element_text(angle = 35, hjust = 1, size = 7.5)) +
+  labs(title = "How Did Students First Hear About Career Center?", x = "Survey Options", y = 'Number of Responses', caption = "Data Source: Pre-Appointment Survey via Handshake") +
+  theme(plot.caption = element_text(color = "gray45", face = 'italic'))
+```
+
+### More Tidying
+```{r working with referral response column}
+#trimming whitespace and removing NAs
+referralData <- result2 %>% select(lowerReferralResponse) %>%
+  mutate(lowerReferralResponse = trimws(lowerReferralResponse)) %>% filter(!is.na(lowerReferralResponse), lowerReferralResponse != "n/a", lowerReferralResponse != "na")
+
+#tallying names
+test2 <- referralData %>% group_by(lowerReferralResponse) %>% summarize(count = n())
+
+#writing to csv to do manual editing
+fwrite(test2, "~/test2.csv")
+
+test2Edit <- read.csv("~/Career Center Internship/DataFiles/test2v2.csv")
+
+ #changing NAs to 1
+test2Edit <- test2Edit %>% mutate(count = ifelse(is.na(count), 1, count))
+
+#regex expression vars
+prefixRemoval1 <- "(dr\\. |doctor|professor|prof\\. )"
+prefixRemoval2 <- "^\\s*(?:dr\\.?|prof(essor)?\\.?)\\s*"
+
+#ungrouping tallys and retrimming, also remove prefixes dr. and prof. from names
+ungroupedTest2 <- test2Edit[rep(seq_len(nrow(test2Edit)), test2Edit$count), ] %>% select(lowerReferralResponse) %>% mutate(referral = trimws(lowerReferralResponse)) %>% mutate(referral = trimws(gsub(prefixRemoval2, "", referral, ignore.case = TRUE)))
+
+
+#Manually edited names that were still messed up even after removing prefix
+cleanedUpPrefix <- read.csv("~/Career Center Internship/DataFiles/ungroupedTest2.csv")
+
+#tallying names again
+ungroupedTest2Tally <- cleanedUpPrefix %>% group_by(referral) %>% summarize(count = n())
+
+#slicing tally and sqrting count, transforming back to proper names
+slicedTally <- ungroupedTest2Tally %>% mutate(sqrt_count = sqrt(count), referral = str_to_title(referral)) %>% arrange(desc(sqrt_count)) %>% select(referral, sqrt_count) %>% slice_head(n = 60)
+```
+
+### Wordcloud
+```{r wordcloud}
+#Extracted referral counts are slightly low balled, but it is the best I could do given the format of the data. Further accuracy is attainable but will also cause minimal difference if any difference in the results
+
+#Wordcloud for top 60 (size tbd) referrers
+#Experiment with colors, orientation, and other elements of word cloud once it is time for the actual post
+wordcloud2(slicedTally, shape = "circle", size = 0.4, color="random-dark")
+```
+
+
+
+
+
+

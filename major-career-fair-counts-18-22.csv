@@ -1,0 +1,488 @@
+major,student_attendees
+Marketing,783
+Finance,591
+Computer Science,548
+Mechanical Engineering,366
+Accounting,325
+Supply Chain Management,322
+Advertising & Public Relations,226
+General Management,220
+Business General,208
+Psychology,190
+Electrical Engineering,163
+Business Economics,153
+Information Systems,153
+Biomedical Sciences,131
+Criminal Justice,127
+Allied Health Sciences,123
+Human Resources Management,120
+Computer Engineering,114
+Communication Studies,110
+Management,96
+Statistics,96
+Hospitality Tourism Management,95
+Mathematics,94
+Data Science and Analytics,93
+Exercise Science,88
+Cybersecurity,85
+Product Dsgn & Mfg Engineering,84
+Applied Computer Science,83
+Pre-professional Preparation,82
+Physical Therapy,77
+Information Technology,76
+Social Work,74
+Engineering,71
+Nursing,70
+Occupational Safety/Health Mgt,66
+Public and Nonprofit Admin,62
+Integrative Studies,61
+Political Science,60
+International Business,57
+Writing,54
+Biology,53
+Environ and Sustain Studies,52
+Cell & Molecular Biology,46
+Behavioral Neuroscience,44
+Entrepreneurship,43
+Biomedical Engineering,41
+International Relations,40
+Health and Bioinformatics,38
+Geographic Info Science Tech,37
+Film and Video,36
+Health Administration,36
+Operations Management,36
+Legal Studies,34
+Health Communication,34
+Education,34
+Natural Resources Mgmt,34
+Sport Management,34
+Economics,32
+Studio Art,32
+English,32
+General Studies,30
+Biochemistry,29
+Assoc of Arts (007),29
+Business Administration,29
+Public Health,28
+Sociology,24
+Multimedia Journalism,24
+Public Administration,24
+Liberal Studies,24
+Non Degree Graduate,24
+Computer Information Systems,23
+Health Information Management,21
+Interdisciplinary Engineering,20
+Higher Education,20
+Biostatistics,20
+Leadership,19
+Accounting (BS),19
+Chemistry,19
+Communications,18
+Medical & Health Humanities,16
+Anthropology,16
+Geography,16
+Spanish,15
+Applied Data Analytics,14
+General Sciences and Arts,14
+Communication Sci & Disorders,13
+Real Estate,13
+Diagnostic Medical Sonography,12
+Project Management,12
+Music,12
+Exploratory Study,12
+Physics,11
+Computer Science (BS),11
+Philosophy,11
+Environmental Remote Sensing,11
+Paralegal Studies,10
+Business (General),10
+Occupational Therapy,10
+Liberal Arts,9
+Social Innovation,9
+History,9
+Group Social Studies,9
+Business Fundamentals,9
+Business Administration (102),9
+Bioinformatics and Genomics,8
+"Women, Gender & Sexuality Stdy",8
+Assoc of General Studies (006),8
+Applied Statistics,8
+Non Degree Undergraduate,7
+Physician Assistant Studies,7
+Assoc of Science (011),7
+Recreational Therapy,7
+Sport Coaching,6
+Workplace Tech & Communication,6
+Degree Seeking Undergraduate,6
+Comp Sci & Arts for Teaching,6
+Radiation Therapy,6
+Philan & Nonprofit Leadership,6
+Speech-Language Pathology,6
+Special Education,5
+Geology,5
+General Education,5
+Photography,5
+Biotechnology,5
+Pre-Business (101),5
+Theatre,5
+Dance,5
+Data Analytics,5
+Sustainable Urban & Reg Plan,5
+Clinical Dietetics,5
+Computer Engineering (BS),5
+General Studies (AA Degree),4
+Communication,4
+Study Abroad,4
+Sustainable Food Systems,4
+Green Chemistry,4
+Business Administration & Management,4
+Electronics and communication engineering,4
+Database Management,4
+Finance (BS),4
+General Business,4
+Applied Science,4
+Global Studies & Social Impact,4
+Business Management,4
+Medical Laboratory Science,4
+Applied Food & Nutrition,4
+Dual Enrollment,4
+Accounting (128),4
+Educational Studies,3
+Info Visualization Fundamental,3
+Software Design & Development,3
+Environmental Science,3
+Information Systems Management,3
+Science and Arts,3
+Therapeutic Recreation,3
+Electrical Engineering (BS),3
+Instruction & Curriculum,3
+Microbiology,3
+Foundational ASL,3
+Biological Sciences (BS),3
+Data Science,3
+Electrical And Computer Engineering,3
+Integrated Science Elementary,3
+Pre-Computer Science (452),3
+Wildlife Biology,3
+Pre-Engineering (553),3
+MTA Requirements,3
+General Engineering,3
+"Jrnlsm, Brdcast & Digtl Media",3
+Networking Fundamentals,3
+School Counseling,3
+General Biology,3
+Engineering (BS),3
+Classics,3
+Info Security Fundamentals,3
+Biomedical Informatics,3
+Public Management (General),2
+Mobile App Fundamentals,2
+Electronic Engineering Technology,2
+Electromagnetic Compatibility,2
+Associates in Arts,2
+Biological Sciences,2
+Respiratory Care,2
+Actuarial Science,2
+Object-Oriented Program Fund,2
+Computer Science and Engineering,2
+Water Resource Policy,2
+Culinary Arts,2
+International Studies,2
+Audiology,2
+School Psychology,2
+Master Of Business Adm (Mba),2
+Cardiovascular Sonography,2
+Undecided,2
+Physical Education,2
+Comp Information Systems (P10),2
+Electronics And Computer Technology,2
+Educational Leadership,2
+Fisheries and Aquatic sciences,2
+Dentistry,2
+International Economics,2
+Ped Cont Know PreK-6th,2
+Architecture,2
+"Communication, Culture, and Media (BA)",2
+Web & Mobile Computing,2
+Software Engineering,2
+Associates Degree - General Studies,2
+General Arts,2
+Athletic Training,2
+Latino/a Studies,2
+Marketing (125),2
+German,2
+Cannabis Operations & Com Plan,2
+None (nondegree),2
+French,2
+Women and Gender Studies,2
+Science and Art,2
+Business (P01),2
+Accountancy,2
+Data Mining Fundamentals,2
+Undeclared/General Studies,2
+Neuroscience,2
+Geology (BS),2
+Japanese,2
+High School Diploma,2
+French Linguistics,1
+Health  Exercise Science (P02),1
+Personal Financial Planning,1
+Nonprofit Leadership,1
+Chemistry (NATURAL SC),1
+Art,1
+Advertising and Public Relations,1
+Allied Health Science,1
+Education (CED - Bachelors),1
+Chemical Engineering (BS),1
+Gen Studies - Math/Natural Sci,1
+Sociology--Criminal Justice Emphasis,1
+Doctor of Pharmacy,1
+Pharmacy,1
+Sculpture and Functional Art,1
+Business preference,1
+Kinesiology (CED - Bachelors),1
+"Biotechnology - Master, Animal Biotechnology, Biological Sciences",1
+Computer Systems Networking & Telecommunications,1
+Global Studies,1
+Pre Architecture Program,1
+Digital Media Production,1
+Computer Science & Eng,1
+Occupational Therapy Assistant,1
+Summer Visiting Student,1
+environmental science transfer,1
+Transfer Studies,1
+Pre-Engineering,1
+General Science,1
+Computer Science (Acsc),1
+"Engineering--ABET, Mechanical Engineering Emphasis",1
+General Studies (006),1
+Study Abroad Visiting Student,1
+"Physics,Chemistry,Maths",1
+Chinese,1
+Introduction to Programming with Python,1
+CAD Technician,1
+Management & Supervision (127),1
+Financial Management,1
+Health & Physical Education,1
+Web Application Fundamentals,1
+Interdisciplinary Health Services,1
+Sign Language Interpreting,1
+Business Marketing Education,1
+General Studies (Associate Degree),1
+Literature Science and the Arts Undeclared,1
+Nutrition and Food Science,1
+Chemical Technology,1
+Materials Science & Engin Bse,1
+Italian Language and Culture,1
+ENTREPRENEURSHIP CERTIFICATE PGM,1
+Computer Support Specialist,1
+Biology BS,1
+(Mathematical Sciences-Applied Mathematics)(Mathematical Sciences-Mathematics),1
+Health Science Lab. Technology,1
+Foreign Languages,1
+English w. Literature Emph.,1
+Child Life Specialist,1
+Welding  Cert (931),1
+Materials Science & Engin Ph D,1
+University Studies,1
+Information Systems and Technology,1
+German Language & Culture,1
+International Dev Studies,1
+Accounting-AAB,1
+Medicine Md,1
+Physiotherapy,1
+Mrktng: Marketing Management,1
+BACHELOR OF BUSINESS ADMINISTRATION IN FINANCE,1
+Applied Behaivor Analysis,1
+Firefighter I/II Academy,1
+Marketing Management,1
+Undecided: Business,1
+Tooling & Mfg Tech (908),1
+Bioinformatics,1
+Pharm D,1
+BS Actuarial Science,1
+Business Law,1
+Computer Programming-AAS,1
+English (BA),1
+Arabic,1
+Supply Chain Management (BUS - Bachelors),1
+Health/Exercise Science,1
+Elementary Education,1
+Electronic Engineering Tech,1
+Digital Marketing,1
+Applied Behavior Analysis,1
+Business Administration (Abad),1
+Graphic Design:BFA program,1
+Taxation,1
+Engineering Management (BS),1
+Computer Science (EGR - Bachelors),1
+Graphic Design,1
+Journalism-Broadcast News,1
+Medicine,1
+English Language and Lit,1
+"Law, Juris Doctor (Jd)",1
+Human Resources,1
+Accounting (BUS - Masters),1
+Comm Disorders & Deaf Education,1
+Mandarin Chinese,1
+Pre-Economics (536),1
+Civil Engineering (BS),1
+Medical Assisting,1
+Brewing Sciences,1
+Human Anatomy and Physiology,1
+Network Administration,1
+Geographic Information Systems,1
+FMD Major: Fashion Design Concentration,1
+Cancer Biology Ms,1
+Dental Hygiene,1
+Intercultural Training,1
+Advanced Certificate in Applied Behavior Analysis,1
+Italian,1
+Operations and Supply Chain,1
+Welding,1
+Sociology with a concentration of Criminal Justice,1
+Nutritional Sciences,1
+Journalism,1
+Electronics and Computer Engineering Technology,1
+Applied Anthropology,1
+Enginnering,1
+Public Relations And Advertising,1
+Corporate Financial Management,1
+Economics And Finance,1
+Graphics/Web Development (160),1
+6160 - Mathematics,1
+Hospitality,1
+Front End Web Development Certificate,1
+Associate in Science,1
+Physics/Math,1
+Interpersonal & Public Communication,1
+2nd Maj: Business Economics,1
+Spanish Language,1
+French Literature,1
+Photography (Bfa),1
+Foundations of Tax Practice,1
+Community Development,1
+Production And Operations Mgmt,1
+Addiction Studies  Cert (154),1
+Textile Engineering,1
+Online/Blended Instr & Assess,1
+Organizational Leadership,1
+Mass Communication,1
+Communication Disorders,1
+Embedded Systems,1
+Biomolecular Science,1
+Marine Geosciences,1
+Associates of Arts,1
+Kinesiology W/ Exercise Science Concentration,1
+Entrepreneurship and Business Management,1
+Audio Production and Technology (BS),1
+Theater,1
+English Language and Literature,1
+Assoc of Music (220),1
+Creative Writing,1
+Law,1
+Product Design and Manufacturing Engineering,1
+Undeclared Core,1
+Machine Tool/CNC Technology,1
+Financial Mathematics,1
+General Arts and Sciences,1
+Pharmaceutical Sciences Bs,1
+Undecided/General Education,1
+Chinese Studies,1
+Women's and Gender Studies / Social Work,1
+Bachelor of Science in Data Management/Data Analytics,1
+Environmental Studies,1
+Management Engineering,1
+Strategic Communication (CAS - Masters),1
+Integrated & Applied Sciences,1
+Teaching English To Speakers Of Other Languages,1
+Criminal Justice/Criminology,1
+Investment Management,1
+University Studies - Associates,1
+bachelor of dental surgery,1
+Biotechnology Engineering,1
+Business Transfer,1
+Industrial Engineering,1
+Hospitality Managment,1
+Ped Cont Know PreK-3rd,1
+Asd,1
+International Liberal Studies,1
+BDTS Spec in Radiologic Tech,1
+Educational Technology,1
+Machine Learning,1
+Associate of Arts (AA),1
+Applied Linguistics,1
+Journalism and Technical Comm,1
+Medical Illustration,1
+Hospitality Business (BUS - Bachelors),1
+Electrical Electronic Eng Tech,1
+Organizational Change Leadership,1
+AAS Associates of Arts in Sciences Degree,1
+Associate of Arts; Business,1
+Accounting/Cpa Track,1
+CAD Product Design Option,1
+Pre Social Work,1
+Industrial And Operations Engineering,1
+Genomics & Molecular Genetics (NATURAL SC),1
+Forensic Investigation,1
+Digital Audio Spec  Cert (215),1
+Communication Sciences and Disorders,1
+Pre-Criminal Justice (525),1
+Elementary Education:K-8,1
+Accounting Certified Public,1
+1.Computer Science,1
+Disaster Risk Management,1
+PGA Golf Management,1
+MBA,1
+Medical & Bioinformatics,1
+Biophysics,1
+English BA,1
+Pre-Communication,1
+Data Sciences,1
+Paramedic,1
+Chinese Language,1
+Digital Forensics Fundamentals,1
+Video Game Design and Development,1
+Computer Aided Design,1
+Master of Business Admn (1 yr) (MBA),1
+Emergency Medical Technician - Certificate of Proficiency (EMT),1
+Business Concentration,1
+Management With Concentrations,1
+Business Economics/Management,1
+Journalism/Reporting,1
+Electrical & Computer Engr,1
+College Teaching-Kinesiology (Adv Cert),1
+International and Comparative Education,1
+Biochemistry/Biotechnology,1
+Pre-General Business,1
+Experience Industry Management,1
+General Studies (Massage Therapy),1
+Intercultural Communication,1
+Associate in General Studies,1
+Financial Engineering,1
+Computer & Information Science,1
+High School Program and Pre-College Program,1
+Engineering Technology,1
+Computer Programming and Analysis,1
+Film & Media Studies (BS),1
+Education Specialist In School Psychology (M.Ed./Ed.S.),1
+Electrical and Electronic Engineering,1
+Business-Admitted (BUS - Bachelors),1
+Environmental Policy And Management,1
+Japanese Studies Composite,1
+Finance-BBA,1
+General Science (AS),1
+Advanced ASL,1
+Marketing (Sales Emphasis),1
+Finance & Economis,1
+International Management,1
+Kinesiology,1
+MBA Executive,1
+"Psychology, Counseling",1
+Intercultural Communications,1
+Associate in Arts,1
+Social Work/Human Services,1
+Public and Nonprofit Administratio Major,1
+Victim Advocacy & Services,1
+Business Analytics,1
+Culinary Arts (151),1

@@ -1,0 +1,121 @@
+---
+title: "F23 CF Eval"
+author: "Parker Kuchulan"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Packages}
+library(tidyverse)
+library(skimr)
+library(lubridate)
+library(chron)
+library(hms)
+```
+
+```{r importing data}
+f23data <- read.csv("~/Career Center Internship/DataFiles/F23 CF Eval.csv")
+```
+
+```{r cleaning NA's and empties, lowercase major}
+f23data2 <- f23data %>% filter(!is.na(major), major != "N/A", major != "NA", major != "") %>% mutate(major_lower = trimws(tolower(major)), grade_lower = trimws(tolower(class_standing))) %>% filter(major_lower != "college student affairs leadership")
+
+#lowercase majors
+```
+
+```{r major tallys}
+#did manual cleaning in csv
+major_counts <- f23data2 %>% group_by(major_lower) %>% summarize(count = n())
+```
+
+```{r class standing tally}
+grade_counts <- f23data2 %>% group_by(grade_lower) %>% summarize(count = n())
+```
+
+
+```{r analyzing satisfaction an interview conf}
+#create avg_satisfaction and avg_interview score variables by major 
+f23data3 <- f23data2 %>% group_by(major_lower) %>% mutate(avg_satisaction = round(mean(satisfaction), 2), avg_interview = round(mean(interview_conf), 2)) %>% select(major_lower, avg_satisaction, avg_interview) %>% unique()
+
+#joining major counts and avg_satisfaction and avg_interview
+f23dataCount <- left_join(f23data3, major_counts, by = "major_lower")
+
+#analyzing greater than 1 response
+scoreAnalysis1 <- f23dataCount %>% filter(count > 1)
+
+#analyzing 5 or greater responses
+scoreAnalysis5 <- f23dataCount %>% filter(count >= 5)
+```
+
+```{r class standing scores analysis}
+classStandingAnalysis <- left_join(f23data2, grade_counts, by = "grade_lower") %>% group_by(grade_lower) %>% mutate(avg_satisaction = round(mean(satisfaction), 2), avg_interview = round(mean(interview_conf), 2)) %>% select(grade_lower, count, avg_satisaction, avg_interview) %>% unique()
+```
+
+
+```{r analyzing correlation between satisfaction and confidence}
+corAnalysis <- f23data %>% select(satisfaction, interview_conf) %>% filter(!is.na(satisfaction), !is.na(interview_conf))
+
+#cor between satisfaction and confidence
+corAnalysis %>% cor(method = "spearman")
+
+testCor <- corAnalysis %>% mutate(score_dif = abs(satisfaction - interview_conf)) %>% filter(score_dif > 1)
+```
+
+### Analyzing the busiest check-in time
+```{r importing}
+rawHSdata <- read.csv("~/Career Center Internship/DataFiles/F23CFAttendeesHSraw.csv")
+skim(rawHSdata)
+glimpse(rawHSdata)
+```
+
+```{r cleaning dt var}
+#filter out non-attendees, converting to date-time var
+rawHSdata2 <- rawHSdata %>% filter(checked_in != "No", ) %>% mutate(check_in_dt = mdy_hm(trimws(checked_in)))
+
+
+#Figure out how to plot the date time variable distribution
+checkInTimes <- rawHSdata2 %>% select(check_in_dt)
+
+#extracting only time from dt var
+checkInTimes$time_only <- str_extract(checkInTimes$check_in_dt, "\\d{2}:\\d{2}")
+
+#converting time to time var using hms package
+
+checkInTimes$time_only <-lubridate::hm(checkInTimes$time_only) 
+
+#filtering times less than noon
+checkInTimes2 <- checkInTimes %>% filter(hour(check_in_dt) >= 12)
+
+#creating time only var for freqpoly
+checkInHms <- checkInTimes2 %>% mutate(time2 = hms(time_only))
+
+#creating hour only for barplot
+checkInTimes3 <- checkInHms %>% mutate(hour = hour(check_in_dt))
+```
+
+```{r Bar chart for most popular check-in hours}
+checkInTimes3 %>% ggplot(aes(hour)) + 
+  geom_bar(fill = "dodgerblue", color = "black") + 
+  theme_classic() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(title = "Most Popular Check-In Hours Career Fair Fall 2023", x = "Hour", y = "Frequency", caption = "Data Source: F23CFSurvey")
+```
+
+```{r frequency of check-ins of all times}
+  checkInHms %>% ggplot(aes(time2)) +
+    geom_freqpoly() + labs(title = "Check-In Times for Career Fair Fall 2023", x = "Time of Check-In (24hr)", y = "Total # of Check-Ins", caption = "Data Source: F23CFSurvey") +
+  theme_bw()
+```
+
+
+
+
+
+
+
+
+

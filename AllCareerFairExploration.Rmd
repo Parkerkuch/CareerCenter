@@ -1,0 +1,125 @@
+---
+title: "Major by Year Exploration"
+author: "Parker Kuchulan"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages}
+library(tidyverse)
+library(readr)
+library(readxl)
+library(matrixStats)
+library(flextable)
+```
+
+
+```{r import}
+#Importing datafiles
+library(readxl)
+#totals of students who attended career fairs from 18-22 by major
+major_career_fair_counts_18_22 <- read_csv("~/Career Center Internship/DataFiles/careerCenterExplorationCorrect.csv")
+
+#totals of students by major enrollment 18-22 
+major_yearly_enrollement18_22 <- read_excel("~/Career Center Internship/DataFiles/major-yearly-enrollement18-22.xlsx")
+```
+
+```{r filter}
+#filtering majors with attendees < 1
+cleanCareer <- major_career_fair_counts_18_22 %>% filter(student_attendees > 1)
+```
+
+```{r adding vars and tidying}
+#adding vars for total and avg undergrad students to enrollment data
+cleanEnrollment <- major_yearly_enrollement18_22 %>% mutate(total_undergrad = rowSums(select(., year_2018, year_2019, year_2021, year_2022)), average_undergrad = round((total_undergrad/(5 - majorless_years)), 0))
+
+#reordering columns, removing majors with total <= 10
+cleanEnrollment <- cleanEnrollment %>% filter(total_undergrad >= 10)  
+```
+
+```{r joining}
+#Creating joined dataset, keeping all majors with career center data but not necessarily all majors
+careerEnrollment <- cleanCareer %>% left_join(cleanEnrollment, by = c("major" = "major"))
+
+#Removing majors without proper data
+careerEnrollment <- careerEnrollment %>% filter(!is.na(average_undergrad)) %>% distinct(major, .keep_all = TRUE) %>% select(major, student_attendees, majorless_years, total_undergrad, average_undergrad)
+```
+
+```{r filtering joined data}
+#Filtering and tweaking joined data
+careerEnrollmentClean <- careerEnrollment %>% mutate(avg_career_fair = round(student_attendees/(4 - majorless_years), 0)) %>% rename(avg_undergrad = average_undergrad) %>% select(major, total_undergrad, avg_undergrad, student_attendees, avg_career_fair, majorless_years)
+```
+
+```{r prop attendance var}
+#Creating proportion variables
+careerEnrollmentClean2 <- careerEnrollmentClean %>% mutate(yearly_prop_attendance = round(avg_career_fair/avg_undergrad, 2))
+```
+
+```{r filter}
+careerEnrollmentClean3 <- careerEnrollmentClean2 %>% filter(major != "Engineering") %>% filter(major != "Respiratory Care")
+```
+
+```{r Table for top 10 majors that attend career fair}
+#making df with top 10
+top10MajorsCf <- careerEnrollmentClean3 %>% select(major, avg_career_fair) %>% arrange(desc(avg_career_fair)) %>% slice_head(n = 10)
+
+#table
+top10MajorsCfTable <- flextable(top10MajorsCf)
+top10MajorsCfTable %>% set_header_labels(major = "Major", avg_career_fair = "Students/Year", bold = TRUE) %>% set_caption("Top 10 Majors that Attend Career Fair") %>%  theme_box()
+```
+
+
+```{r}
+#Fix stacked bar issue
+#creating prop not var for stacked barchart
+stackBarData <- careerEnrollmentClean3 %>% arrange(desc(avg_career_fair)) %>% slice_head(n = 10)
+
+#creating df with duplicate rows, one for attended and not attended
+stackLong <- pivot_longer(stackBarData, cols = c(avg_career_fair, avg_undergrad),
+                         names_to = "attended", 
+                         values_to = "amount") %>% group_by(attended) %>% arrange(desc(amount))
+```
+
+```{r avg undergrad enrollment vs avg career fair attendance by major (top 10 career fair majors)}
+#Stacked barplot for showing the proportion of the top 10 majors who attend career fair
+stackLong %>% ggplot(aes(x = major)) +  
+  geom_bar(aes(y = amount, fill = fct_rev(attended)), position = "stack", stat = "identity", color = "darkgray") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = "bold", size = 10)) +
+  labs(x = "Major", y = "Total Students", title = "Average Undergraduate Enrollment vs Average Career Fair Attendance by Major", fill = "Key", caption = "Data Source: Handshake") + scale_fill_manual(values = c("avg_career_fair" = "dodgerblue", "avg_undergrad" = "indianred3"),
+                    labels = c("Undergraduate", "Career Fair"))
+```
+
+```{r proportion of students who attend career fair by major (top 10 career fair majors)}
+stackLong %>% ggplot(aes(x = reorder(major, -yearly_prop_attendance), y = yearly_prop_attendance)) +  
+  geom_bar(aes(y = amount, fill = fct_rev(attended)), position = "fill", stat = "identity", color = "darkgray") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = "bold", size = 10)) +
+  labs(x = "Major", y = "Proportion of Attendance", title = "Average Undergraduate Enrollment vs Average Career Fair Attendance by Major", fill = "Key", caption = "Data Source: Handshake") + scale_fill_manual(values = c("avg_career_fair" = "dodgerblue", "avg_undergrad" = "indianred3"),
+                    labels = c("Undergraduate", "Career Fair"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
