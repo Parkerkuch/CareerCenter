@@ -1,0 +1,69 @@
+---
+title: "Career Center"
+author: "Parker Kuchulan"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(skimr)
+```
+
+```{r}
+#Reading in Datafile
+library(readr)
+MajorYearCounts <- read_csv("~/Career Center Internship/DataFiles/MajorYearCountsCareerFair.csv")
+View(MajorYearCounts)
+```
+
+
+```{r}
+#Removing NA's
+temp <- na.omit(MajorYearCounts)
+```
+
+```{r}
+#Preview Data
+skim(MajorYearCounts)
+```
+```{r}
+#Cleaning
+
+#renaming columns to simple names
+temp2 <- temp %>% rename("count" = `Student Attendees Count`, "major" = `Student Attendee Majors (at Fair Time) Name`, "year" = `Student Attendee School Year (at Fair Time) Name`)
+
+
+#combining major and year into 1 column
+temp3 <- temp2 %>% mutate(majorYear = paste(major, year, sep = " / ")) %>% 
+  select(major, year, majorYear, count)
+
+#creating a percent of total for count
+temp4 <- temp3 %>% mutate(total = sum(count), percent = (count/total)*100, percent = round(percent, 2)) %>% select(major, year, majorYear, count, percent)
+
+```
+
+
+```{r}
+#Simple Visualization for top 10 student/major pairings at the career center
+topTenMajorYear <- temp4 %>% slice_head(n = 10) %>% 
+  ggplot(aes(x = reorder(majorYear, -count), y = count)) + 
+  geom_col(fill = "blue", color = "black") +
+  theme_bw() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = "bold", size = 8)) +
+  labs(title = "Top Ten Major by Year of Study Pairs Who Attended Career Fair Since 2018" , x = "Major / Year", y = "Number of Attendees", caption = "Data Source: Handshake")
+
+topTenMajorYear
+```
+
+
+
+
+
